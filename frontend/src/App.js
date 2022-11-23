@@ -12,24 +12,28 @@ function App() {
   const [socketConnected, setSocketConnected] = useState(false);
   const [socketData, setSocketData] = useState([]);
 
-  // console.log(socketData);
+      console.log(socketData);
+
   useEffect(() => {
     socket = io(`${ENDPOINT}`, {
       cors: "*",
       transports: ["websocket"],
     });
 
-    console.log(socket);
     // client-side
     // socket.on("connection", () => {
     //   console.log(socket.id); // x8WIv7-mJelg7on_ALbx
     // });
 
-    // socket.emit("newData", data);
-    // socket.on("newData", (data) => {
-    //   // setSocketData(data);
-    //   // console.log("socket", data);
-    // });
+    //Emit events
+    socket.emit("newData", data);
+
+    //Listen for events
+    socket.on("newData", function(data) {
+      console.log(data)
+      setSocketData(data);
+      // console.log("socket", data);
+    });
     // socket.on("loading", (data) => {
     //   // setSocketData(data);
     //   // console.log("socket", data);
@@ -39,7 +43,7 @@ function App() {
     socket.on("connect_error", (error) => {
       console.log(error);
     });
-  }, []);
+  }, [data]);
 
   async function saveFtxData() {
     try {
@@ -68,7 +72,7 @@ function App() {
       let result = response1.data.bitstampApiData;
       if (response1.data.bitstampApiData) {
         setMongoData(result);
-        setSocketData([...result]);
+        // setSocketData(result);
       }
       // console.log(response1);
     } catch (error) {
@@ -80,11 +84,11 @@ function App() {
 
   setInterval(() => {
     saveFtxData();
-  }, 10000);
+  }, 20000);
 
   useEffect(() => {
     fetchFtxData();
-  }, [data]);
+  }, []);
 
   const coinPair = [];
 
@@ -119,7 +123,7 @@ function App() {
             </tr>
           </thead>
           <tbody>
-            {socketData && socketData.length > 0 ? (
+            { socketData.length > 0 ? (
               socketData.map((coin, index) => (
                 <tr key={index}>
                   <td>{index + 1}</td>
@@ -138,6 +142,7 @@ function App() {
             )}
           </tbody>
         </table>
+        <button type="button" className="btn btn-primary">Primary</button>
       </div>
     </>
   );

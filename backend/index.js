@@ -43,14 +43,14 @@ io.on("connection", (socket) => {
   // console.log(socket)
 
   socket.on("newData", function (data) {
-    socket.emit("newData", data);
+    io.sockets.emit("newData", data);
     // console.log(data);
   });
 
-  socket.on("loading", function (data) {
-    socket.emit("loading", data);
-    // console.log(data);
-  });
+  // socket.on("loading", function (data) {
+  //   socket.emit("loading", data);
+  //   // console.log(data);
+  // });
   socket.on("disconnect", () => {
     console.log("socket.io: User disconnected: ", socket.id);
   });
