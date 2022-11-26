@@ -4,12 +4,10 @@ const route = require("./src/routes/route");
 const mongoose = require("mongoose");
 const cors = require("cors");
 
-let bitstampModel = require("./src/models/bitstamp");
-
 dotenv.config();
 const app = express();
-app.use(express.json()); // to accept json data
-app.use(express.urlencoded({ extended: true }));
+app.use(express.json({ limit: "50mb" })); // to accept json data
+app.use(express.urlencoded({ extended: true, limit: "50mb" }));
 app.use(cors());
 
 let MONGODB_URI =
@@ -57,7 +55,6 @@ io.on("connection", (socket) => {
 
   socket.on("connect_error", (error) => {
     console.log(error);
-    // socket.connect();
   });
 });
 
@@ -74,17 +71,27 @@ connection.once("open", () => {
       case "insert":
         const mData = {
           _id: change.fullDocument._id,
-          // pairName: change.fullDocument.pairName,
-          // description: change.fullDocument.description,
+          pairName: change.fullDocument.pairName,
+          lastPrice: change.fullDocument.lastPrice,
+          highPrice: change.fullDocument.highPrice,
+          lowPrice: change.fullDocument.lowPrice,
+          volume: change.fullDocument.volume,
+          bidPrice: change.fullDocument.bidPrice,
         };
 
-        io.of("/socket").emit("newData", mData);
+        // let value = [...mData];
+        // console.log(value)
+        // let data = [];
+        // for (let i = 0; i <change.length; i++) {
+        //   data.push([i])
+        // }
+        // console.log(data);
+        io.emit("newMData", change.fullDocument);
         break;
       case "delete":
-        io.of("/socket").emit("deletedData", change.documentKey._id);
+        io.emit("deletedData", change.documentKey._id);
         break;
     }
-    // console.log(change);
   });
 });
 // socket connection

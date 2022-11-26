@@ -44,7 +44,7 @@ let getBitstampAllPair = async (req, res) => {
   try {
     let bitstampApi = await bitstampModel
       .find()
-      .sort({ createdAt: -1, pairName: 1 })
+      .sort({ timeStamp: -1})
       .limit(175);
 
     return res.json({ msg: "successfull", bitstampApiData: bitstampApi });
