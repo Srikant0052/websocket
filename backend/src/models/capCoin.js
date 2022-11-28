@@ -15,25 +15,25 @@ const capCoinSchema = new mongoose.Schema(
       default: null,
     },
     priceUsd: {
-      type: String,
+      type: Number,
       default: null,
     },
 
     volumeUsd24Hr: {
-      type: String,
+      type: Number,
       default: null,
     },
     supply: {
-      type: String,
+      type: Number,
       default: null,
     },
     maxSupply: {
-      type: String,
+      type: Number,
       default: null,
     },
-    
+
     marketCapUsd: {
-      type: String,
+      type: Number,
       default: null,
     },
     changePercent24Hr: {
@@ -47,7 +47,7 @@ const capCoinSchema = new mongoose.Schema(
     },
 
     vwap24Hr: {
-      type: String,
+      type: Number,
       default: null,
     },
 

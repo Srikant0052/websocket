@@ -15,7 +15,7 @@ const bitstampSchema = new mongoose.Schema(
       default: null,
     },
     volume: {
-      type: String,
+      type: Number,
       default: null,
     },
     baseVolume: {

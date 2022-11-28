@@ -15,17 +15,14 @@ function Bitstamp() {
     });
 
     //Emit events
-    socket.emit("newData", data);
+    socket.emit("coiPair", data);
 
     //Listen for events
-    socket.on("newData", async function (data) {
+    socket.on("coiPair", async function (data) {
       // console.log(data);
       let show = await data;
       setSocketData(show);
     });
-    // socket.on("loading", (data) => {
-    //   // setSocketData(data);
-    // });
 
     //Listen for events
     socket.on("newMData", async function (data) {
@@ -51,7 +48,7 @@ function Bitstamp() {
       });
       if (response.data.bitstampData) {
         setData(response.data.bitstampData);
-        setSocketData(response.data.bitstampData);
+        // setSocketData(response.data.bitstampData);
       }
       // console.log(response);
     } catch (error) {
@@ -83,7 +80,7 @@ function Bitstamp() {
   useEffect(() => {
     setInterval(() => {
       saveFtxData();
-    }, 6000);
+    }, 3000);
   }, []);
 
   // useEffect(() => {
@@ -118,6 +115,7 @@ function Bitstamp() {
               <th scope="col">High Price</th>
               <th scope="col">Volume</th>
               <th scope="col">Bid Price</th>
+              <th scope="col">Price Change%</th>
             </tr>
           </thead>
           <tbody>
@@ -129,8 +127,9 @@ function Bitstamp() {
                   <td>{coin.lastPrice}</td>
                   <td>{coin.lowPrice}</td>
                   <td>{coin.highPrice}</td>
-                  <td>{coin.volume}</td>
+                  <td>{coin.volume.toFixed(2)}</td>
                   <td>{coin.bidPrice}</td>
+                  <td>{coin.priceChangePercent}</td>
                 </tr>
               ))
             ) : (

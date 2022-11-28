@@ -40,15 +40,15 @@ io.on("connection", (socket) => {
   console.log("socket.io: User connected: ", socket.id);
   // console.log(socket)
 
-  socket.on("newData", function (data) {
-    io.sockets.emit("newData", data);
+  socket.on("coiPair", function (data) {
+    io.sockets.emit("coiPair", data);
     // console.log(data);
   });
 
-  // socket.on("loading", function (data) {
-  //   socket.emit("loading", data);
-  //   // console.log(data);
-  // });
+  socket.on("SingleCoin", function (data) {
+    io.sockets.emit("SingleCoin", data);
+    // console.log(data);
+  });
   socket.on("disconnect", () => {
     console.log("socket.io: User disconnected: ", socket.id);
   });

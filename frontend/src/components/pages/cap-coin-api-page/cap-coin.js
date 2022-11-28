@@ -17,17 +17,14 @@ function Capcoin() {
     });
 
     //Emit events
-    socket.emit("newData", coinData);
+    socket.emit("SingleCoin", data);
 
     //Listen for events
-    socket.on("newData", async function (data) {
+    socket.on("SingleCoin", async function (data) {
       // console.log(data);
       let show = await data;
       setCoinData(show);
     });
-    // socket.on("loading", (data) => {
-    //   // setSocketData(data);
-    // });
 
     //Listen for events
     socket.on("newMData", async function (data) {
@@ -41,32 +38,36 @@ function Capcoin() {
     });
   }, [data]);
 
-  async function getCoinData() {
-    try {
-      let response2 = await axios({
-        method: "get",
-        url: "https://api.coincap.io/v2/assets",
-      });
-      if (response2.data) {
-        setCoinData(response2.data.data);
-        setData(response2.data.data);
-      }
-      // console.log(response2);
-    } catch (error) {
-      console.log(error);
-    } finally {
-      setIsLoading(false);
-    }
-  }
+  // async function getCoinData() {
+  //   try {
+  //     let response2 = await axios({
+  //       method: "get",
+  //       url: "https://api.coincap.io/v2/assets",
+  //     });
+  //     if (response2.data) {
+  //       // setCoinData(response2.data.data);
+  //       setData(response2.data.data);
+  //     }
+  //     // console.log(response2);
+  //   } catch (error) {
+  //     console.log(error);
+  //   } finally {
+  //     setIsLoading(false);
+  //   }
+  // }
 
   async function saveCapCoinDb() {
     try {
-      let resp = await axios({
+      let response = await axios({
         method: "post",
         url: "http://localhost:4000/cap100Coin",
-        data: { ...coinData },
       });
-      // console.log(resp);
+
+      if (response.data) {
+        // setCoinData(response.data.data);
+        setData(response.data.data);
+      }
+      // console.log(response);
     } catch (error) {
       console.log(error);
     } finally {
@@ -76,7 +77,7 @@ function Capcoin() {
 
   useEffect(() => {
     setInterval(() => {
-      //   getCoinData();
+      // getCoinData();
       saveCapCoinDb();
     }, 3000);
   }, []);
@@ -96,7 +97,7 @@ function Capcoin() {
           }}
         >
           <h3 style={{ padding: "10px auto", fontFamily: "monospace" }}>
-            last 24(Hr) data
+            Coin data
           </h3>
         </div>
         <table className="table" style={{ padding: "10px auto" }}>
@@ -118,12 +119,12 @@ function Capcoin() {
                 <tr key={index}>
                   <td>{coin.rank}</td>
                   <td>{coin.symbol}</td>
-                  <td>{coin.name}</td>
-                  <td>{coin.priceUsd}</td>
-                  <td>{coin.marketCapUsd}</td>
-                  <td>{coin.supply}</td>
-                  <td>{coin.volumeUsd24Hr}</td>
-                  <td>{coin.changePercent24Hr}</td>
+                  <td>{coin.coinName}</td>
+                  <td>{coin.priceUsd.toFixed(4)}</td>
+                  <td>{coin.marketCapUsd.toFixed(2)}</td>
+                  <td>{coin.supply.toFixed(2)}</td>
+                  <td>{coin.volumeUsd24Hr.toFixed(2)}</td>
+                  <td>{coin.changePercent24Hr.toFixed(2)}%</td>
                 </tr>
               ))
             ) : (
