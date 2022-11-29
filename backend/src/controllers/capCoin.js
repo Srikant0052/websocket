@@ -1,4 +1,5 @@
 let axios = require("axios");
+const bitstamp = require("../models/bitstamp");
 const capCoin = require("../models/capCoin");
 
 const capCoin100Coins = async function (req, res) {
@@ -41,4 +42,20 @@ const capCoin100Coins = async function (req, res) {
   }
 };
 
-module.exports = { capCoin100Coins };
+const getCoinPairing = async (req, res) => {
+  try {
+    const coinSymbol = req.params.symbol;
+
+    const filterQuery = { pairName: { $regex: coinSymbol } };
+    const coinPair = await bitstamp.find(filterQuery).sort({createdAt:-1}).limit(10);
+
+    return res
+      .status(200)
+      .send({ status: true, message: "Success", data: coinPair });
+
+  } catch (error) {
+    return res.status(500).send({ status: false, message: error.message });
+  }
+};
+
+module.exports = { capCoin100Coins, getCoinPairing };

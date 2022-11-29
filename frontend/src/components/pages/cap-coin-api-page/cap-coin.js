@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { socket } from "../../socket-io-connection/socket";
+import { Link } from "react-router-dom";
 
 function Capcoin() {
   const [data, setData] = useState([]);
@@ -27,11 +28,11 @@ function Capcoin() {
     });
 
     //Listen for events
-    socket.on("newMData", async function (data) {
-      // let somethig = await data;
-      // console.log(somethig)
-      // setSocketData(somethig)
-    });
+    // socket.on("newMData", async function (data) {
+    //   // let somethig = await data;
+    //   // console.log(somethig)
+    //   // setSocketData(somethig)
+    // });
 
     socket.on("connect_error", (error) => {
       console.log(error);
@@ -79,7 +80,7 @@ function Capcoin() {
     setInterval(() => {
       // getCoinData();
       saveCapCoinDb();
-    }, 3000);
+    }, 1000);
   }, []);
 
   if (isLoading) {
@@ -118,7 +119,10 @@ function Capcoin() {
               coinData.map((coin, index) => (
                 <tr key={index}>
                   <td>{coin.rank}</td>
-                  <td>{coin.symbol}</td>
+                  <td><Link to="/pairs"
+                          onClick={() =>
+                            localStorage.setItem("symbol", coin.symbol)
+                          }>{coin.symbol}</Link></td>
                   <td>{coin.coinName}</td>
                   <td>{coin.priceUsd.toFixed(4)}</td>
                   <td>{coin.marketCapUsd.toFixed(2)}</td>

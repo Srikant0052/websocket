@@ -2,11 +2,14 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { socket } from "../../socket-io-connection/socket";
 
-function Bitstamp() {
+function CoinPair() {
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [socketConnected, setSocketConnected] = useState(false);
   const [socketData, setSocketData] = useState([]);
+
+  let symbol = localStorage.getItem("symbol");
+  console.log(symbol);
 
   useEffect(() => {
     socket.on("connection", () => {
@@ -15,11 +18,11 @@ function Bitstamp() {
     });
 
     //Emit events
-    socket.emit("coiPair", data);
+    socket.emit("oneCoinPair", data);
 
     //Listen for events
-    socket.on("coiPair", async function (data) {
-      // console.log(data);
+    socket.on("oneCoinPair", async function (data) {
+      console.log(data);
       let show = await data;
       setSocketData(show);
     });
@@ -27,7 +30,7 @@ function Bitstamp() {
     //Listen for events
     // socket.on("newMData", async function (data) {
     //   // let somethig = await data;
-    //   // console.log(somethig)
+    //   console.log(somethig)
     //   // setSocketData(somethig)
     // });
 
@@ -40,36 +43,18 @@ function Bitstamp() {
     // };
   }, [data]);
 
-  async function saveFtxData() {
-    try {
-      let response = await axios({
-        method: "post",
-        url: "http://localhost:4000/bitstampApi",
-      });
-      if (response.data.bitstampData) {
-        setData(response.data.bitstampData);
-        // setSocketData(response.data.bitstampData);
-      }
-      // console.log(response);
-    } catch (error) {
-      console.log(error);
-    } finally {
-      setIsLoading(false);
-    }
-  }
-
-  async function fetchFtxData() {
+  async function fetchCoinPair() {
     try {
       let response1 = await axios({
         method: "get",
-        url: "http://localhost:4000/pairBitstamp",
+        url: `http://localhost:4000/getCoinPair/${symbol}`,
       });
-      let result = response1.data.bitstampApiData;
-      if (response1.data.bitstampApiData) {
-        setMongoData(result);
-        // setSocketData(result);
+      let result = response1.data.data;
+      if (response1.data) {
+        setData(result);
+        // setData(result);
       }
-      // console.log(response1);
+      console.log(response1);
     } catch (error) {
       console.log(error);
     } finally {
@@ -77,15 +62,15 @@ function Bitstamp() {
     }
   }
 
-  useEffect(() => {
-    setInterval(() => {
-      saveFtxData();
-    }, 1000);
-  }, []);
+  //   useEffect(() => {
+  //     setInterval(() => {
+  //       saveFtxData();
+  //     }, 1000);
+  //   }, []);
 
-  // useEffect(() => {
-  //   fetchFtxData();
-  // }, []);
+  useEffect(() => {
+    fetchCoinPair();
+  }, []);
 
   if (isLoading) {
     return null;
@@ -144,4 +129,4 @@ function Bitstamp() {
   );
 }
 
-export default Bitstamp;
+export default CoinPair;

@@ -1,5 +1,6 @@
 import Capcoin from "./pages/capCoin";
 import Home from "./pages/bitstamp";
+import CoinPair from "./pages/coinPair";
 
 export const ROUTES = [
   {
@@ -9,5 +10,9 @@ export const ROUTES = [
   {
     path: "/coins",
     page: <Capcoin />,
+  },
+  {
+    path: "/pairs",
+    page: <CoinPair />,
   },
 ];

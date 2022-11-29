@@ -49,6 +49,12 @@ io.on("connection", (socket) => {
     io.sockets.emit("SingleCoin", data);
     // console.log(data);
   });
+
+  socket.on("oneCoinPair", function (data) {
+    io.sockets.emit("oneCoinPair", data);
+    // console.log(data);
+  });
+
   socket.on("disconnect", () => {
     console.log("socket.io: User disconnected: ", socket.id);
   });
@@ -58,42 +64,42 @@ io.on("connection", (socket) => {
   });
 });
 
-const connection = mongoose.connection;
+// const connection = mongoose.connection;
 
-connection.once("open", () => {
-  // console.log("MongoDB database connected");
-  console.log("Setting change streams");
+// connection.once("open", () => {
+//   // console.log("MongoDB database connected");
+//   console.log("Setting change streams");
 
-  const datachange = connection.collection("bitstamps").watch();
+//   const datachange = connection.collection("bitstamps").watch();
 
-  datachange.on("change", (change) => {
-    switch (change.operationType) {
-      case "insert":
-        const mData = {
-          _id: change.fullDocument._id,
-          pairName: change.fullDocument.pairName,
-          lastPrice: change.fullDocument.lastPrice,
-          highPrice: change.fullDocument.highPrice,
-          lowPrice: change.fullDocument.lowPrice,
-          volume: change.fullDocument.volume,
-          bidPrice: change.fullDocument.bidPrice,
-        };
+//   datachange.on("change", (change) => {
+//     switch (change.operationType) {
+//       case "insert":
+//         const mData = {
+//           _id: change.fullDocument._id,
+//           pairName: change.fullDocument.pairName,
+//           lastPrice: change.fullDocument.lastPrice,
+//           highPrice: change.fullDocument.highPrice,
+//           lowPrice: change.fullDocument.lowPrice,
+//           volume: change.fullDocument.volume,
+//           bidPrice: change.fullDocument.bidPrice,
+//         };
 
-        // let value = [...mData];
-        // console.log(value)
-        // let data = [];
-        // for (let i = 0; i <change.length; i++) {
-        //   data.push([i])
-        // }
-        // console.log(data);
-        io.emit("newMData", change.fullDocument);
-        break;
-      case "delete":
-        io.emit("deletedData", change.documentKey._id);
-        break;
-    }
-  });
-});
+//         // let value = [...mData];
+//         // console.log(value)
+//         // let data = [];
+//         // for (let i = 0; i <change.length; i++) {
+//         //   data.push([i])
+//         // }
+//         // console.log(data);
+//         io.emit("newMData", change.fullDocument);
+//         break;
+//       case "delete":
+//         io.emit("deletedData", change.documentKey._id);
+//         break;
+//     }
+//   });
+// });
 // socket connection
 // io.on("connection", (socket) => {
 // changeStream.on("change", (next) => {
