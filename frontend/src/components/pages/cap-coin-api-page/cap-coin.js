@@ -89,7 +89,7 @@ function Capcoin() {
 
   return (
     <>
-      <div className="BistampsData">
+      <div className="CapCoinData">
         <div
           style={{
             display: "flex",

@@ -1,5 +1,5 @@
 let axios = require("axios");
-let bitstampModel = require("../models/bitstamp");
+let bitstampModel = require("../models/bitstampApiModel");
 
 const bitstampFunction = async function (req, res) {
   try {
@@ -33,10 +33,10 @@ const bitstampFunction = async function (req, res) {
     // console.log(bitstampApiInDb);
 
     return res
-      .status(200)
-      .send({ msg: "successful", bitstampData: bitstampApiInDb });
+      .status(201)
+      .send({ status: true, msg: "successful", bitstampData: bitstampApiInDb });
   } catch (error) {
-    return res.status(500).send({ message: error.message });
+    return res.status(500).send({ status: false, message: error.message });
   }
 };
 
@@ -44,14 +44,18 @@ let getBitstampAllPair = async (req, res) => {
   try {
     let bitstampApi = await bitstampModel
       .find()
-      .sort({ timeStamp: -1})
+      .sort({ timeStamp: -1 })
       .limit(175);
 
-    return res.json({ msg: "successfull", bitstampApiData: bitstampApi });
+    return res.json({
+      status: true,
+      msg: "successfull",
+      bitstampApiData: bitstampApi,
+    });
   } catch (error) {
     return res
       .status(500)
-      .send({ msg: "There is some technical error!", error });
+      .send({ status: false, message: error.message });
   }
 };
 

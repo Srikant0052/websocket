@@ -1,19 +1,21 @@
 const express = require("express");
 const dotenv = require("dotenv");
-const route = require("./src/routes/route");
 const mongoose = require("mongoose");
 const cors = require("cors");
-
+const capCoinRoute = require("./src/routes/capCoinRoute");
+const bitstampRoute = require("./src/routes/bitstampRoute");
+const bitgetRoute = require("./src/routes/bitgetRoute");
+const bitsoRoute = require("./src/routes/bitsoRoute");
+const binanceRoute = require("./src/routes/binanaceRoute");
 dotenv.config();
 const app = express();
-app.use(express.json({ limit: "50mb" })); // to accept json data
+app.use(express.json({ limit: "50mb" }));
 app.use(express.urlencoded({ extended: true, limit: "50mb" }));
 app.use(cors());
 
 let MONGODB_URI =
   "mongodb+srv://siamaqConsultancy:siamaqAdmin@siamaqdatabase.obfed2x.mongodb.net/websocket";
 let port = process.env.PORT || 4000;
-// let databaseUrl = process.env.MONGODB_URI;
 
 mongoose
   .connect(MONGODB_URI, {
@@ -22,7 +24,11 @@ mongoose
   .then(() => console.log("mongoDb Is Connected"))
   .catch((err) => console.log(err));
 
-app.use("/", route);
+app.use("/", bitstampRoute);
+app.use("/", capCoinRoute);
+app.use("/", binanceRoute);
+app.use("/", bitsoRoute);
+app.use("/", bitgetRoute);
 
 const server = app.listen(
   port,
@@ -55,6 +61,21 @@ io.on("connection", (socket) => {
     // console.log(data);
   });
 
+  socket.on("binanceCoinPair", function (data) {
+    io.sockets.emit("binanceCoinPair", data);
+    // console.log(data);
+  });
+
+  socket.on("bitgetPair", function (data) {
+    io.sockets.emit("bitgetPair", data);
+    // console.log(data);
+  });
+
+  socket.on("bitsoPair", function (data) {
+    io.sockets.emit("bitsoPair", data);
+    // console.log(data);
+  });
+
   socket.on("disconnect", () => {
     console.log("socket.io: User disconnected: ", socket.id);
   });
@@ -65,7 +86,6 @@ io.on("connection", (socket) => {
 });
 
 // const connection = mongoose.connection;
-
 // connection.once("open", () => {
 //   // console.log("MongoDB database connected");
 //   console.log("Setting change streams");

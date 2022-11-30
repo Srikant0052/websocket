@@ -2,15 +2,12 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { socket } from "../../socket-io-connection/socket";
 
-function CoinPair() {
+function Bitget() {
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [socketConnected, setSocketConnected] = useState(false);
   const [socketData, setSocketData] = useState([]);
 
-  let symbol = localStorage.getItem("symbol");
-  // console.log(symbol);
-  // console.log(socketData)
   useEffect(() => {
     socket.on("connection", () => {
       setSocketConnected(true);
@@ -18,11 +15,11 @@ function CoinPair() {
     });
 
     //Emit events
-    socket.emit("oneCoinPair", data);
+    socket.emit("bitgetPair", data);
 
     //Listen for events
-    socket.on("oneCoinPair", async function (data) {
-      // console.log(data);
+    socket.on("bitgetPair", async function (data) {
+      //   console.log(data);
       let show = await data;
       setSocketData(show);
     });
@@ -30,31 +27,25 @@ function CoinPair() {
     //Listen for events
     // socket.on("newMData", async function (data) {
     //   // let somethig = await data;
-    //   console.log(somethig)
+    //   // console.log(somethig)
     //   // setSocketData(somethig)
     // });
 
     socket.on("connect_error", (error) => {
       console.log(error);
     });
-
-    // return () => {
-    //   socket.disconnect();
-    // };
   }, [data]);
 
-  async function fetchCoinPair() {
+  async function saveBitgetData() {
     try {
-      let response1 = await axios({
-        method: "get",
-        url: `http://localhost:4000/getCoinPair/${symbol}`,
+      let response = await axios({
+        method: "post",
+        url: "http://localhost:4000/bitgetApi",
       });
-      let result = response1.data.data;
-      if (response1.data) {
-        setData(result);
-        // setData(result);
+      if (response.data.data) {
+        setData(response.data.data);
       }
-      console.log(response1);
+      //   console.log(response);
     } catch (error) {
       console.log(error);
     } finally {
@@ -63,7 +54,9 @@ function CoinPair() {
   }
 
   useEffect(() => {
-    fetchCoinPair();
+    setInterval(() => {
+        saveBitgetData();
+    }, 3000);
   }, []);
 
   if (isLoading) {
@@ -72,7 +65,7 @@ function CoinPair() {
 
   return (
     <>
-      <div className="CapCoin">
+      <div className="BistampsData">
         <div
           style={{
             display: "flex",
@@ -87,12 +80,13 @@ function CoinPair() {
         <table className="table" style={{ padding: "10px auto" }}>
           <thead>
             <tr>
-              <th scope="col">#</th>
+              {/* <th scope="col">#</th> */}
               <th scope="col">Pair Name</th>
               <th scope="col">Last Price</th>
               <th scope="col">Low Price</th>
               <th scope="col">High Price</th>
-              <th scope="col">Volume</th>
+              <th scope="col">Base Volume</th>
+              <th scope="col">Quote Volume</th>
               <th scope="col">Bid Price</th>
               <th scope="col">Price Change%</th>
             </tr>
@@ -101,12 +95,13 @@ function CoinPair() {
             {socketData.length > 0 ? (
               socketData.map((coin, index) => (
                 <tr key={index}>
-                  <td>{index + 1}</td>
+                  {/* <td>{index + 1}</td> */}
                   <td>{coin.pairName}</td>
                   <td>{coin.lastPrice}</td>
                   <td>{coin.lowPrice}</td>
                   <td>{coin.highPrice}</td>
-                  <td>{coin.volume}</td>
+                  <td>{coin.baseVolume}</td>
+                  <td>{coin.quoteVolume}</td>
                   <td>{coin.bidPrice}</td>
                   <td>{coin.priceChangePercent}</td>
                 </tr>
@@ -123,4 +118,4 @@ function CoinPair() {
   );
 }
 
-export default CoinPair;
+export default Bitget;

@@ -1,6 +1,6 @@
 let axios = require("axios");
-const bitstamp = require("../models/bitstamp");
-const capCoin = require("../models/capCoin");
+const bitstamp = require("../models/bitstampApiModel");
+const capCoin = require("../models/capCoinApiModel");
 
 const capCoin100Coins = async function (req, res) {
   try {
@@ -47,12 +47,19 @@ const getCoinPairing = async (req, res) => {
     const coinSymbol = req.params.symbol;
 
     const filterQuery = { pairName: { $regex: coinSymbol } };
-    const coinPair = await bitstamp.find(filterQuery).sort({createdAt:-1}).limit(10);
+    const pair = await bitstamp.distinct("pairName", filterQuery);
+    // console.log(pair);
+
+    let length = pair.length;
+
+    const coinPair = await bitstamp
+      .find(filterQuery)
+      .sort({ createdAt: -1 })
+      .limit(length);
 
     return res
       .status(200)
       .send({ status: true, message: "Success", data: coinPair });
-
   } catch (error) {
     return res.status(500).send({ status: false, message: error.message });
   }
