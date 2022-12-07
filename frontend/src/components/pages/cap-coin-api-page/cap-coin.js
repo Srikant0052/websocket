@@ -2,9 +2,12 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { socket } from "../../socket-io-connection/socket";
 import { Link } from "react-router-dom";
+import Chart from "chart.js";
+import { Line } from "react-chartjs-2";
 
 function Capcoin() {
   const [data, setData] = useState([]);
+  const [dailyData, setDailyData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [socketConnected, setSocketConnected] = useState(false);
   const [coinData, setCoinData] = useState([]);
@@ -26,13 +29,6 @@ function Capcoin() {
       let show = await data;
       setCoinData(show);
     });
-
-    //Listen for events
-    // socket.on("newMData", async function (data) {
-    //   // let somethig = await data;
-    //   // console.log(somethig)
-    //   // setSocketData(somethig)
-    // });
 
     socket.on("connect_error", (error) => {
       console.log(error);
@@ -65,7 +61,7 @@ function Capcoin() {
       });
 
       if (response.data) {
-        // setCoinData(response.data.data);
+        setDailyData(response.data.data);
         setData(response.data.data);
       }
       // console.log(response);
@@ -112,6 +108,7 @@ function Capcoin() {
               <th scope="col">Supply</th>
               <th scope="col">Volume(24Hr)</th>
               <th scope="col">Change%(24Hr)</th>
+              {/* <th scope="col">(24Hr)</th> */}
             </tr>
           </thead>
           <tbody>
@@ -119,16 +116,23 @@ function Capcoin() {
               coinData.map((coin, index) => (
                 <tr key={index}>
                   <td>{coin.rank}</td>
-                  <td><Link to="/pairs"
-                          onClick={() =>
-                            localStorage.setItem("symbol", coin.symbol)
-                          }>{coin.symbol}</Link></td>
+                  <td>
+                    <Link
+                      to="/pairs"
+                      onClick={() =>
+                        localStorage.setItem("symbol", coin.symbol)
+                      }
+                    >
+                      {coin.symbol}
+                    </Link>
+                  </td>
                   <td>{coin.coinName}</td>
                   <td>{coin.priceUsd.toFixed(4)}</td>
                   <td>{coin.marketCapUsd.toFixed(2)}</td>
                   <td>{coin.supply.toFixed(2)}</td>
                   <td>{coin.volumeUsd24Hr.toFixed(2)}</td>
                   <td>{coin.changePercent24Hr.toFixed(2)}%</td>
+                  {/* <td><Line>{coin.priceUsd}</Line></td> */}
                 </tr>
               ))
             ) : (

@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const bitsoSchema = new mongoose.Schema(
+const okxSchema = new mongoose.Schema(
   {
     coinName: {
       type: String,
@@ -19,7 +19,7 @@ const bitsoSchema = new mongoose.Schema(
       default: null,
     },
     baseVolume: {
-      type: String,
+      type: Number,
       default: null,
     },
     quoteVolume: {
@@ -27,19 +27,19 @@ const bitsoSchema = new mongoose.Schema(
       default: null,
     },
     lastPrice: {
-      type: String,
+      type: Number,
       default: null,
     },
     lastPrice1h: {
-      type: String,
+      type: Number,
       default: null,
     },
     highPrice: {
-      type: String,
+      type: Number,
       default: null,
     },
     lowPrice: {
-      type: String,
+      type: Number,
       default: null,
     },
     price: {
@@ -47,7 +47,7 @@ const bitsoSchema = new mongoose.Schema(
       default: null,
     },
     openPrice: {
-      type: String,
+      type: Number,
       default: null,
     },
     askPrice: {
@@ -75,11 +75,11 @@ const bitsoSchema = new mongoose.Schema(
       default: null,
     },
     bidPrice: {
-      type: String,
+      type: Number,
       default: null,
     },
     priceChange: {
-      type: String,
+      type: Number,
       default: null,
     },
     priceChangePercent: {
@@ -91,11 +91,11 @@ const bitsoSchema = new mongoose.Schema(
       default: null,
     },
     openTime: {
-      type: Number,
+      type: String,
       default: null,
     },
     closeTime: {
-      type: Number,
+      type: String,
       default: null,
     },
     change1h: {
@@ -145,6 +145,6 @@ const bitsoSchema = new mongoose.Schema(
   },
   { timestamps: true }
 );
-bitsoSchema.index({ createdAt: 1 }, { expireAfterSeconds: 900 });
 
-module.exports = mongoose.model("bitso", bitsoSchema);
+okxSchema.index({ createdAt: 1 }, { expireAfterSeconds: 900 });
+module.exports = mongoose.model("okx", okxSchema);

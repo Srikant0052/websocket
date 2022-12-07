@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const bitsoSchema = new mongoose.Schema(
+const poloniexSchema = new mongoose.Schema(
   {
     coinName: {
       type: String,
@@ -15,43 +15,43 @@ const bitsoSchema = new mongoose.Schema(
       default: null,
     },
     volume: {
-      type: String,
+      type: Number,
       default: null,
     },
     baseVolume: {
-      type: String,
+      type: Number,
       default: null,
     },
     quoteVolume: {
-      type: String,
+      type: Number,
       default: null,
     },
     lastPrice: {
-      type: String,
+      type: Number,
       default: null,
     },
     lastPrice1h: {
-      type: String,
+      type: Number,
       default: null,
     },
     highPrice: {
-      type: String,
+      type: Number,
       default: null,
     },
     lowPrice: {
-      type: String,
+      type: Number,
       default: null,
     },
     price: {
-      type: String,
+      type: Number,
       default: null,
     },
     openPrice: {
-      type: String,
+      type: Number,
       default: null,
     },
     askPrice: {
-      type: String,
+      type: Number,
       default: null,
     },
     baseCurrency: {
@@ -75,15 +75,15 @@ const bitsoSchema = new mongoose.Schema(
       default: null,
     },
     bidPrice: {
-      type: String,
+      type: Number,
       default: null,
     },
     priceChange: {
-      type: String,
+      type: Number,
       default: null,
     },
     priceChangePercent: {
-      type: String,
+      type: Number,
       default: null,
     },
     weightedAvgPrice: {
@@ -91,11 +91,11 @@ const bitsoSchema = new mongoose.Schema(
       default: null,
     },
     openTime: {
-      type: Number,
+      type: String,
       default: null,
     },
     closeTime: {
-      type: Number,
+      type: String,
       default: null,
     },
     change1h: {
@@ -134,6 +134,10 @@ const bitsoSchema = new mongoose.Schema(
       type: Number,
       default: null,
     },
+    qty: {
+      type: String,
+      default: null,
+    },
     timeStamp: {
       type: String,
       default: null,
@@ -145,6 +149,6 @@ const bitsoSchema = new mongoose.Schema(
   },
   { timestamps: true }
 );
-bitsoSchema.index({ createdAt: 1 }, { expireAfterSeconds: 900 });
 
-module.exports = mongoose.model("bitso", bitsoSchema);
+poloniexSchema.index({ createdAt: 1 }, { expireAfterSeconds: 900 });
+module.exports = mongoose.model("poloniex", poloniexSchema);

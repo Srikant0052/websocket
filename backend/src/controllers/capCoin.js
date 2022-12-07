@@ -4,9 +4,10 @@ const capCoin = require("../models/capCoinApiModel");
 
 const capCoin100Coins = async function (req, res) {
   try {
+
     const options = {
       method: "get",
-      url: "https://api.coincap.io/v2/assets",
+      url: "https://api.coincap.io/v2/assets?limit=200",
     };
 
     const response = await axios(options);

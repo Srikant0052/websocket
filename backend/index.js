@@ -2,16 +2,24 @@ const express = require("express");
 const dotenv = require("dotenv");
 const mongoose = require("mongoose");
 const cors = require("cors");
-const capCoinRoute = require("./src/routes/capCoinRoute");
-const bitstampRoute = require("./src/routes/bitstampRoute");
-const bitgetRoute = require("./src/routes/bitgetRoute");
-const bitsoRoute = require("./src/routes/bitsoRoute");
-const binanceRoute = require("./src/routes/binanaceRoute");
+
 dotenv.config();
 const app = express();
 app.use(express.json({ limit: "50mb" }));
 app.use(express.urlencoded({ extended: true, limit: "50mb" }));
 app.use(cors());
+
+//Routes
+const capCoinRoute = require("./src/routes/capCoinRoute");
+const bitstampRoute = require("./src/routes/bitstampRoute");
+const bitgetRoute = require("./src/routes/bitgetRoute");
+const bitsoRoute = require("./src/routes/bitsoRoute");
+const binanceRoute = require("./src/routes/binanaceRoute");
+const bybitRoute = require("./src/routes/bybitRoute");
+const huobiRoute = require("./src/routes/huobiRoute");
+const indoexRoute = require("./src/routes/indoexRoute");
+const okxRoute = require("./src/routes/okxRoute");
+const poloniexRoute = require("./src/routes/poloniexRoute");
 
 let MONGODB_URI =
   "mongodb+srv://siamaqConsultancy:siamaqAdmin@siamaqdatabase.obfed2x.mongodb.net/websocket";
@@ -24,11 +32,17 @@ mongoose
   .then(() => console.log("mongoDb Is Connected"))
   .catch((err) => console.log(err));
 
+//Middlewares
 app.use("/", bitstampRoute);
 app.use("/", capCoinRoute);
 app.use("/", binanceRoute);
 app.use("/", bitsoRoute);
 app.use("/", bitgetRoute);
+app.use("/", bybitRoute);
+app.use("/", huobiRoute);
+app.use("/", indoexRoute);
+app.use("/", okxRoute);
+app.use("/", poloniexRoute);
 
 const server = app.listen(
   port,
@@ -73,6 +87,31 @@ io.on("connection", (socket) => {
 
   socket.on("bitsoPair", function (data) {
     io.sockets.emit("bitsoPair", data);
+    // console.log(data);
+  });
+
+  socket.on("bybitPair", function (data) {
+    io.sockets.emit("bybitPair", data);
+    // console.log(data);
+  });
+
+  socket.on("huobiPair", function (data) {
+    io.sockets.emit("huobiPair", data);
+    // console.log(data);
+  });
+
+  socket.on("indoexPair", function (data) {
+    io.sockets.emit("indoexPair", data);
+    // console.log(data);
+  });
+
+  socket.on("okxPair", function (data) {
+    io.sockets.emit("okxPair", data);
+    // console.log(data);
+  });
+
+  socket.on("poloniexPair", function (data) {
+    io.sockets.emit("poloniexPair", data);
     // console.log(data);
   });
 

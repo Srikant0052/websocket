@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const bitsoSchema = new mongoose.Schema(
+const bybitSchema = new mongoose.Schema(
   {
     coinName: {
       type: String,
@@ -15,19 +15,19 @@ const bitsoSchema = new mongoose.Schema(
       default: null,
     },
     volume: {
-      type: String,
+      type: Number,
       default: null,
     },
     baseVolume: {
-      type: String,
+      type: Number,
       default: null,
     },
     quoteVolume: {
-      type: String,
+      type: Number,
       default: null,
     },
     lastPrice: {
-      type: String,
+      type: Number,
       default: null,
     },
     lastPrice1h: {
@@ -35,7 +35,7 @@ const bitsoSchema = new mongoose.Schema(
       default: null,
     },
     highPrice: {
-      type: String,
+      type: Number,
       default: null,
     },
     lowPrice: {
@@ -43,7 +43,7 @@ const bitsoSchema = new mongoose.Schema(
       default: null,
     },
     price: {
-      type: String,
+      type: Number,
       default: null,
     },
     openPrice: {
@@ -75,7 +75,7 @@ const bitsoSchema = new mongoose.Schema(
       default: null,
     },
     bidPrice: {
-      type: String,
+      type: Number,
       default: null,
     },
     priceChange: {
@@ -83,7 +83,7 @@ const bitsoSchema = new mongoose.Schema(
       default: null,
     },
     priceChangePercent: {
-      type: String,
+      type: Number,
       default: null,
     },
     weightedAvgPrice: {
@@ -145,6 +145,6 @@ const bitsoSchema = new mongoose.Schema(
   },
   { timestamps: true }
 );
-bitsoSchema.index({ createdAt: 1 }, { expireAfterSeconds: 900 });
+bybitSchema.index({ createdAt: 1 }, { expireAfterSeconds: 900 });
 
-module.exports = mongoose.model("bitso", bitsoSchema);
+module.exports = mongoose.model("bybit", bybitSchema);
