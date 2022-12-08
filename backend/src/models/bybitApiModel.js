@@ -145,6 +145,6 @@ const bybitSchema = new mongoose.Schema(
   },
   { timestamps: true }
 );
-bybitSchema.index({ createdAt: 1 }, { expireAfterSeconds: 900 });
+bybitSchema.index({ createdAt: 1 }, { expireAfterSeconds: 3600 });
 
 module.exports = mongoose.model("bybit", bybitSchema);

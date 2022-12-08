@@ -22,7 +22,7 @@ const okxRoute = require("./src/routes/okxRoute");
 const poloniexRoute = require("./src/routes/poloniexRoute");
 
 let MONGODB_URI =
-  "mongodb+srv://siamaqConsultancy:siamaqAdmin@siamaqdatabase.obfed2x.mongodb.net/websocket";
+  "mongodb://104.245.38.221:27017/websocket";
 let port = process.env.PORT || 4000;
 
 mongoose

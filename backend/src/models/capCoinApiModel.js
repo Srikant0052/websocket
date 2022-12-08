@@ -59,5 +59,5 @@ const capCoinSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-capCoinSchema.index({ createdAt: 1 }, { expireAfterSeconds: 1800 });
+capCoinSchema.index({ createdAt: 1 }, { expireAfterSeconds: 3600 });
 module.exports = mongoose.model("capCoin100", capCoinSchema);

@@ -146,6 +146,6 @@ const bitgetSchema = new mongoose.Schema(
   },
   { timestamps: true }
 );
-bitgetSchema.index({ createdAt: 1 }, { expireAfterSeconds: 900 });
+bitgetSchema.index({ createdAt: 1 }, { expireAfterSeconds: 3600 });
 
 module.exports = mongoose.model("bitget", bitgetSchema);

@@ -145,6 +145,6 @@ const bitstampSchema = new mongoose.Schema(
   },
   { timestamps: true }
 );
-bitstampSchema.index({ createdAt: 1 }, { expireAfterSeconds: 1800 });
+bitstampSchema.index({ createdAt: 1 }, { expireAfterSeconds: 3600 });
 
 module.exports = mongoose.model("bitstamp", bitstampSchema);

@@ -150,5 +150,5 @@ const poloniexSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-poloniexSchema.index({ createdAt: 1 }, { expireAfterSeconds: 900 });
+poloniexSchema.index({ createdAt: 1 }, { expireAfterSeconds: 3600 });
 module.exports = mongoose.model("poloniex", poloniexSchema);

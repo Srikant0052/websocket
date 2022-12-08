@@ -150,5 +150,5 @@ const indeoxSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-indeoxSchema.index({ createdAt: 1 }, { expireAfterSeconds: 900 });
+indeoxSchema.index({ createdAt: 1 }, { expireAfterSeconds: 3600 });
 module.exports = mongoose.model("indeox", indeoxSchema);

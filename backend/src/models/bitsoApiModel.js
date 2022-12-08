@@ -145,6 +145,6 @@ const bitsoSchema = new mongoose.Schema(
   },
   { timestamps: true }
 );
-bitsoSchema.index({ createdAt: 1 }, { expireAfterSeconds: 900 });
+bitsoSchema.index({ createdAt: 1 }, { expireAfterSeconds: 3600 });
 
 module.exports = mongoose.model("bitso", bitsoSchema);

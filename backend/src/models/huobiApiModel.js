@@ -145,6 +145,6 @@ const huobiapiSchema = new mongoose.Schema(
   },
   { timestamps: true }
 );
-huobiapiSchema.index({ createdAt: 1 }, { expireAfterSeconds: 900 });
+huobiapiSchema.index({ createdAt: 1 }, { expireAfterSeconds: 3600 });
 
 module.exports = mongoose.model("huobiapi", huobiapiSchema);

@@ -181,6 +181,6 @@ const binanceSchema = new mongoose.Schema(
   },
   { timestamps: true }
 );
-binanceSchema.index({ createdAt: 1 }, { expireAfterSeconds: 900 });
+binanceSchema.index({ createdAt: 1 }, { expireAfterSeconds: 3600 });
 
 module.exports = mongoose.model("binance", binanceSchema);
