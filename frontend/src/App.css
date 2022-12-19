@@ -1,0 +1,109 @@
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  animation: App-logo-spin infinite 20s linear;
+  height: 80px;
+}
+
+.App-header {
+  background-color: #222;
+  height: 150px;
+  padding: 20px;
+  color: white;
+}
+
+.App-intro {
+  font-size: large;
+}
+
+@keyframes App-logo-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.grid-elements {
+  /* background-color: #393e40;
+  color: #fff;
+  border: #303436 1px solid;
+  padding: 20px;
+  min-width: 0px;
+  min-height: 0px; */
+}
+
+.container-crash-history {
+  max-width: 1000px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 10px;
+  padding-right: 10px;
+  margin-bottom: 0px;
+}
+
+.active-bet-table li {
+  border-radius: 3px;
+  padding: 2px 30px;
+  display: flex;
+  justify-content: space-between;
+  /* padding-bottom: ; */
+}
+
+.active-bet-table .active-bet-table-header {
+  background-color: #393e40;
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.active-bet-table .table-row-blue {
+  background-color: #fff;
+
+  border: 2px solid #4396e8;
+  color: #4396e8;
+  font-size: 16px;
+  font-weight: 600;
+  font-family: 'Open Sans', sans-serif;
+  background-color: #393e40;
+}
+
+.active-bet-table .table-row-green {
+  background-color: #fff;
+
+  border: 2px solid #43e8da;
+  color: #43e8da;
+  font-size: 16px;
+  font-weight: 600;
+  font-family: 'Open Sans', sans-serif;
+  background-color: #393e40;
+}
+
+.active-bet-table .table-row-red {
+  background-color: #fff;
+  border: 2px solid #ce4975;
+  color: #ce4975;
+  font-size: 16px;
+  font-weight: 600;
+  font-family: 'Open Sans', sans-serif;
+  background-color: #393e40;
+}
+
+.row-bet-wrapper {
+  margin-bottom: 5px;
+}
+
+.active-bet-table .col-1 {
+  flex-basis: 10%;
+}
+
+.active-bet-table .col-2 {
+  flex-basis: 40%;
+}
+
+.active-bet-table .col-3 {
+  flex-basis: 25%;
+}
+
+.active-bet-table .col-4 {
+  flex-basis: 25%;
+}

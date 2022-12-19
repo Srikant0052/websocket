@@ -1,0 +1,54 @@
+.blackjackBTN {
+    margin: 0 10px 0 10px;
+  }
+  
+  .blackJackFrom {
+    display: flex;
+    justify-content: center;
+  }
+  
+  h1 {
+    text-align: center;
+    font-size: 50px;
+  }
+  
+  .blackjackParas {
+    text-align: center;
+  }
+  
+  .buttons {
+  
+    display: flex;
+    width: 44vh;
+    justify-content: space-around;
+    margin: auto;
+    margin-top: 1rem;
+    
+  }
+  
+  
+  .blackjckCard,
+  .card-red {
+    height: 150px;
+    width: 100px;
+    background-color: #bfbfbf;
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  
+  
+  .card-red {
+    color: red;
+  }
+  
+  .cards {
+    margin: 0 auto;
+  }
+  
+  .input-bet {
+    display: flex;
+    justify-content: center;
+  }
